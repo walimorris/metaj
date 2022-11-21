@@ -7,6 +7,7 @@ const BrightnessToggle = () => {
     const lightTheme = [`linear-gradient(to right, #fff, #414141)`, `#000`];
 
     const [theme, setTheme] = useState(localStorage.getItem('metaj-theme') || 'dark');
+    const [defaultChecked, setDefaultChecked] = useState(theme === 'light');
 
     // On page load, grab theme from local storage and set mood. Remove the event listener
     // when the component unmounts
@@ -42,7 +43,7 @@ const BrightnessToggle = () => {
         const root = document.querySelector(':root');
         const metaTable = document.querySelector('#meta-table');
         const isActive = event.target.checked;
-        console.log(isActive);
+        console.log(`isActive=${isActive}`);
 
         if (isActive) {
             setLightTheme(root, metaTable);
@@ -52,7 +53,9 @@ const BrightnessToggle = () => {
     }
 
     /**
-     * Set light theme and following properties.
+     * Set light theme and following properties. This includes setting the checked attribute
+     * on the theme input element. Light theme should be checked which results in the slider
+     * transformation value.
      *
      * @param root the root element
      * @param table the meta-data table element
@@ -61,11 +64,14 @@ const BrightnessToggle = () => {
         root.style.backgroundImage = lightTheme[0];
         table.style.color = lightTheme[1];
         setTheme('light');
+        setDefaultChecked(true);
         localStorage.setItem('metaj-theme', 'light');
     }
 
     /**
-     * Set dark theme and following properties.
+     * Set dark theme and following properties. This includes setting the checked attribute
+     * on the theme input element. Dark theme should be unchecked which results in the slider
+     * transformation value.
      *
      * @param root the root element
      * @param table the meta-data table element
@@ -74,12 +80,13 @@ const BrightnessToggle = () => {
         root.style.backgroundImage = darkTheme[0];
         table.style.color = darkTheme[1];
         setTheme('dark');
+        setDefaultChecked(false);
         localStorage.setItem('metaj-theme', 'dark');
     }
 
     return (
         <label className={'brightness-toggle'}>
-            <input type={'checkbox'} onChange={handleToggle}/>
+            <input type={'checkbox'} checked={defaultChecked} onChange={handleToggle}/>
             <span className={'slider'}></span>
         </label>
     );
