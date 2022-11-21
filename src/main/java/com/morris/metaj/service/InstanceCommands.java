@@ -35,4 +35,20 @@ public class InstanceCommands {
     public String[] instanceAmiManifestPathCommand() {
         return new String[]{EC2_METADATA, "-m"};
     }
+
+    public String[] instanceType() {
+        return new String[]{EC2_METADATA, "-t"};
+    }
+
+    public String[] instanceLocalIpv4() {
+        return new String[]{EC2_METADATA, "-o"};
+    }
+
+    public String[] instanceKernelId() {
+        return new String[]{EC2_METADATA, "-k"};
+    }
+
+    public String[] instancePublicKeys() {
+        return new String[]{EC2_METADATA, "-u"};
+    }
 }

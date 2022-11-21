@@ -2,7 +2,7 @@ const React = require("react");
 
 const MetaTable = ({data}) => {
     return (
-        <table>
+        <table id={'meta-table'}>
             <thead>
             <tr>
                 <th colSpan={2}>EC2 Meta Data</th>

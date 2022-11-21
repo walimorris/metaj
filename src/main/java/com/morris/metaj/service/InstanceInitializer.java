@@ -27,7 +27,11 @@ public class InstanceInitializer {
                 commandExecutor.execute(commands.availabilityZoneCommand()),
                 commandExecutor.execute(commands.instanceAmiIdCommand()),
                 commandExecutor.execute(commands.instanceAmiLaunchIndexCommand()),
-                commandExecutor.execute(commands.instanceAmiManifestPathCommand())
+                commandExecutor.execute(commands.instanceAmiManifestPathCommand()),
+                commandExecutor.execute(commands.instanceLocalIpv4()),
+                commandExecutor.execute(commands.instanceType()),
+                commandExecutor.execute(commands.instanceKernelId()),
+                commandExecutor.execute(commands.instancePublicKeys())
         );
     }
 }
