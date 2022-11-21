@@ -106,5 +106,6 @@ input:checked + .slider:before {
 }
 
 #meta-table {
+    color: #fff;
     padding-top: 40px;
 }
