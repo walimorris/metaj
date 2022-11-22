@@ -57,7 +57,14 @@ module.exports = {
 Spring Boot contains a `resources` folder located in the `src/main/resources/static` directory. This is the default directory where Spring looks for static content.
 Here is where webpack will output our built bundle. In the React fashion we will expose our applications entry point in app.js by calling `ReactDom.render` and 
 passing the id attribute `react` of our `index.html` file in our static resources' folder. When building the application, our build output will be delivered to the 
-`target` directory (this includes our resources for Spring Boot and React). In typical Java fashion, this will be zipped in our projects `.jar` file. 
+`target` directory (this includes our resources for Spring Boot and React). In typical Java fashion, this will be zipped in our project `.jar` file. 
 As you can see, Maven does a lot of the heavy lifting. Give it a try!
 
-### `mvn clean install`
+1. Clone the repo 
+```
+https://github.com/walimorris/metaj.git
+```
+2. Node and NPM installation is taken care of by Maven
+```
+mvn clean install
+```
