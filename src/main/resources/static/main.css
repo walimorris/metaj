@@ -92,6 +92,7 @@ input:checked + .slider:before {
     transition: 0.5s all ease;
 }
 
+/** comment */
 #metaj-logo:hover {
     color: #fff;
     text-shadow: 0 0 100px #666,
@@ -105,7 +106,7 @@ input:checked + .slider:before {
     0 0 50px #000;
 }
 
-/** comment for exposure **/
+/** comment **/
 #meta-table {
     color: #fff;
     padding-top: 40px;
