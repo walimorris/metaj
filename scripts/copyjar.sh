@@ -21,7 +21,19 @@ PROJECT_VERSION=`cat pom.xml | grep "SNAPSHOT" | cut -d'>' -f2 | cut -d'<' -f1`
 
 FILE_TO_COPY="${PROJECT_NAME}-${PROJECT_VERSION}".jar
 
-# sleep script to give /target folder enough time to install
 echo "copying jar file: $FILE_TO_COPY to root folder in project $PROJECT_NAME"
 cp ./target/"$FILE_TO_COPY" "$WORKING_DIRECTORY"
+
+echo "Copy .jar file to virtual instance? [Y/n]"
+read ANSWER
+
+if [ "$ANSWER" = "Y" ] || [ "$ANSWER" = "y" ]
+then
+  echo "enter file to pem"
+  read PEM_FILE
+  echo "enter ec2 instance public host name and path to copy file"
+  read PUBLIC_INSTANCE_AND_FILE
+  sudo scp -i "$PEM_FILE" "$FILE_TO_COPY" "$PUBLIC_INSTANCE_AND_FILE"
+fi
+
 

@@ -12,7 +12,7 @@ const App = () => {
     const [allMetaData, setAllMetaData] = useState([]);
 
     useEffect(() => {
-        fetch ('/meta/test')
+        fetch ('/meta/instance')
             .then(response => response.json())
             .then(data => {
                 setAllMetaData(data);

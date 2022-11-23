@@ -20,6 +20,10 @@ public class InstanceCommands {
         return new String[]{EC2_METADATA, "-p"};
     }
 
+    public String[] localHostnameCommand() {
+        return new String[]{EC2_METADATA, "-h"};
+    }
+
     public String[] availabilityZoneCommand() {
         return new String[]{EC2_METADATA, "-z"};
     }
@@ -50,5 +54,17 @@ public class InstanceCommands {
 
     public String[] instancePublicKeys() {
         return new String[]{EC2_METADATA, "-u"};
+    }
+
+    public String[] instanceAncestorAmiIds() {
+        return new String[]{EC2_METADATA, "-n"};
+    }
+
+    public String[] instanceBlockDeviceMapping() {
+        return new String[]{EC2_METADATA, "-b"};
+    }
+
+    public String[] instanceProductCodesCommand() {
+        return new String[]{EC2_METADATA, "-c"};
     }
 }

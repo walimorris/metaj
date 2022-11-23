@@ -24,6 +24,7 @@ public class InstanceInitializer {
         return new MetaInstance(
                 commandExecutor.execute(commands.instanceCommand()),
                 commandExecutor.execute(commands.publicHostnameCommand()),
+                commandExecutor.execute(commands.localHostnameCommand()),
                 commandExecutor.execute(commands.availabilityZoneCommand()),
                 commandExecutor.execute(commands.instanceAmiIdCommand()),
                 commandExecutor.execute(commands.instanceAmiLaunchIndexCommand()),
@@ -31,7 +32,10 @@ public class InstanceInitializer {
                 commandExecutor.execute(commands.instanceLocalIpv4()),
                 commandExecutor.execute(commands.instanceType()),
                 commandExecutor.execute(commands.instanceKernelId()),
-                commandExecutor.execute(commands.instancePublicKeys())
+                commandExecutor.execute(commands.instancePublicKeys()),
+                commandExecutor.execute(commands.instanceAncestorAmiIds()),
+                commandExecutor.execute(commands.instanceBlockDeviceMapping()),
+                commandExecutor.execute(commands.instanceProductCodesCommand())
         );
     }
 }
