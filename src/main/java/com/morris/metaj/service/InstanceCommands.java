@@ -1,70 +1,106 @@
 package com.morris.metaj.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+/**
+ * {@code com/morris/metaj/service/InstanceCommands.java} exposes numerous ec2-metadata utils commands
+ * that exposes aws ec2 apis for gathering instance metadata throughout metaj.
+ */
+public interface InstanceCommands {
 
-@Service
-public class InstanceCommands {
-    private static final Logger logger = LoggerFactory.getLogger(InstanceCommands.class);
+    /**
+     * Get instance command.
+     *
+     * @return String[]
+     */
+    String[] instanceCommand();
 
-    public InstanceCommands() {}
+    /**
+     * Get public host name command.
+     *
+     * @return String[]
+     */
+    String[] publicHostnameCommand();
 
-    private static final String EC2_METADATA = "ec2-metadata";
+    /**
+     * Get local host name command.
+     *
+     * @return String[]
+     */
+    String[] localHostnameCommand();
 
-    public String[] instanceCommand() {
-        return new String[]{EC2_METADATA, "-i"};
-    }
+    /**
+     * Get availability zone command.
+     *
+     * @return String[]
+     */
+    String[] availabilityZoneCommand();
 
-    public String[] publicHostnameCommand() {
-        return new String[]{EC2_METADATA, "-p"};
-    }
+    /**
+     * Get instance AMI ID command.
+     *
+     * @return String[]
+     */
+    String[] instanceAmiIdCommand();
 
-    public String[] localHostnameCommand() {
-        return new String[]{EC2_METADATA, "-h"};
-    }
+    /**
+     * Get instance AMI launch index command.
+     *
+     * @return String[]
+     */
+    String[] instanceAmiLaunchIndexCommand();
 
-    public String[] availabilityZoneCommand() {
-        return new String[]{EC2_METADATA, "-z"};
-    }
+    /**
+     * Get Instance AMI Manifest path command.
+     *
+     * @return String[]
+     */
+    String[] instanceAmiManifestPathCommand();
 
-    public String[] instanceAmiIdCommand() {
-        return new String[]{EC2_METADATA, "-a"};
-    }
+    /**
+     * Get instance type command.
+     *
+     * @return String[]
+     */
+    String[] instanceTypeCommand();
 
-    public String[] instanceAmiLaunchIndexCommand() {
-        return new String[]{EC2_METADATA, "-l"};
-    }
+    /**
+     * get instance local IPv4 command.
+     *
+     * @return String[]
+     */
+    String[] instanceLocalIpv4Command();
 
-    public String[] instanceAmiManifestPathCommand() {
-        return new String[]{EC2_METADATA, "-m"};
-    }
+    /**
+     * Get instand kernel id command.
+     *
+     * @return String[]
+     */
+    String[] instanceKernelIdCommand();
 
-    public String[] instanceType() {
-        return new String[]{EC2_METADATA, "-t"};
-    }
+    /**
+     * Get instance public keys command.
+     *
+     * @return String[]
+     */
+    String[] instancePublicKeysCommand();
 
-    public String[] instanceLocalIpv4() {
-        return new String[]{EC2_METADATA, "-o"};
-    }
+    /**
+     * Get instance ancestor AMI IDs command.
+     *
+     * @return String[]
+     */
+    String[] instanceAncestorAmiIdsCommand();
 
-    public String[] instanceKernelId() {
-        return new String[]{EC2_METADATA, "-k"};
-    }
+    /**
+     * Get instance block device mapping command.
+     *
+     * @return String[]
+     */
+    String[] instanceBlockDeviceMappingCommand();
 
-    public String[] instancePublicKeys() {
-        return new String[]{EC2_METADATA, "-u"};
-    }
-
-    public String[] instanceAncestorAmiIds() {
-        return new String[]{EC2_METADATA, "-n"};
-    }
-
-    public String[] instanceBlockDeviceMapping() {
-        return new String[]{EC2_METADATA, "-b"};
-    }
-
-    public String[] instanceProductCodesCommand() {
-        return new String[]{EC2_METADATA, "-c"};
-    }
+    /**
+     * Get instance product codes command.
+     *
+     * @return String[]
+     */
+    String[] instanceProductCodesCommand();
 }

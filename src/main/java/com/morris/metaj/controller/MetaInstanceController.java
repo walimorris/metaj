@@ -1,7 +1,7 @@
 package com.morris.metaj.controller;
 
 import com.morris.metaj.model.MetaInstance;
-import com.morris.metaj.service.InstanceInitializer;
+import com.morris.metaj.service.impl.InstanceInitializerImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class MetaInstanceController {
     private static final Logger logger = LoggerFactory.getLogger(MetaInstanceController.class);
 
     @Autowired
-    private InstanceInitializer instanceInitializer;
+    private InstanceInitializerImpl instanceInitializer;
 
     @GetMapping("/instance")
     public MetaInstance getMetaInstance() throws IOException {

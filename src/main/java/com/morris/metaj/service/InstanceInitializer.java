@@ -1,42 +1,20 @@
 package com.morris.metaj.service;
 
 import com.morris.metaj.model.MetaInstance;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+public interface InstanceInitializer {
 
-@Service
-public class InstanceInitializer {
-    private static final Logger logger = LoggerFactory.getLogger(InstanceInitializer.class);
-
-    @Autowired
-    CommandExecutor commandExecutor;
-
-    @Autowired
-    InstanceCommands commands;
-
-    public InstanceInitializer() {}
-
-    public MetaInstance initMetaInstance() throws IOException {
-        return new MetaInstance(
-                commandExecutor.execute(commands.instanceCommand()),
-                commandExecutor.execute(commands.publicHostnameCommand()),
-                commandExecutor.execute(commands.localHostnameCommand()),
-                commandExecutor.execute(commands.availabilityZoneCommand()),
-                commandExecutor.execute(commands.instanceAmiIdCommand()),
-                commandExecutor.execute(commands.instanceAmiLaunchIndexCommand()),
-                commandExecutor.execute(commands.instanceAmiManifestPathCommand()),
-                commandExecutor.execute(commands.instanceLocalIpv4()),
-                commandExecutor.execute(commands.instanceType()),
-                commandExecutor.execute(commands.instanceKernelId()),
-                commandExecutor.execute(commands.instancePublicKeys()),
-                commandExecutor.execute(commands.instanceAncestorAmiIds()),
-                commandExecutor.execute(commands.instanceBlockDeviceMapping()),
-                commandExecutor.execute(commands.instanceProductCodesCommand())
-        );
-    }
+    /**
+     * Initializes an Instance of {@link MetaInstance} with current EC2 instance properties
+     * utilizing service classes that use and take advantage of the EC2 meta-data utils.
+     *
+     * @return {@link MetaInstance}
+     *
+     * @throws Exception may throw Exception in case of command error when utilizing EC2 meta-data
+     * utils commands.
+     *
+     * @see CommandExecutor
+     * @see InstanceCommands
+     */
+    MetaInstance initMetaInstance() throws Exception;
 }
-
