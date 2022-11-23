@@ -5,7 +5,7 @@ const ReactDOM = require('react-dom');
 const {useState} = require("react");
 
 import MetaTable from "./components/MetaTable";
-import BrightnessToggle from "./components/BrightnessToggle";
+import ThemeToggle from "./components/ThemeToggle";
 import MetaJLogo from "./components/MetaJLogo";
 
 const App = () => {
@@ -22,7 +22,7 @@ const App = () => {
 
     return (
         <div id={'app'}>
-            <BrightnessToggle/>
+            <ThemeToggle/>
             <MetaJLogo/>
             <MetaTable data={allMetaData}/>
         </div>

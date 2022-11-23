@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 
 const React = require("react");
 
-const BrightnessToggle = (callback, deps) => {
+const ThemeToggle = () => {
     const darkTheme = [`linear-gradient(to right, #414141, #000000)`, `#fff`];
     const lightTheme = [`linear-gradient(to right, #fff, #414141)`, `#000`];
     const F2 = 113;
@@ -44,7 +44,7 @@ const BrightnessToggle = (callback, deps) => {
     }, [defaultCheckedKeyboard]);
 
     /**
-     * The BrightnessToggle uses a checkbox input under the hood. The toggle will work as a
+     * The ThemeToggle uses a checkbox input under the hood. The toggle will work as a
      * standard checkbox. If the toggle is checked then it is on (true). If a toggle is not
      * checked then it is off (false). When toggled on, the metaj's background will change to
      * light theme and when toggled off will stay as default dark theme.
@@ -91,7 +91,7 @@ const BrightnessToggle = (callback, deps) => {
 
     /**
      * Sets theme on all elements that are impacted by toggling light/dark mode.
-     * Lightheme is active true and DarkTheme is not active false.
+     * LightTheme is active true and DarkTheme is not active false.
      *
      * @param elements all elements in component
      * @param isActive true or false
@@ -146,4 +146,4 @@ const BrightnessToggle = (callback, deps) => {
     );
 };
 
-export default BrightnessToggle;
+export default ThemeToggle;
