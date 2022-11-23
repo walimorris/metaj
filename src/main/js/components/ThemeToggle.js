@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
-
-const React = require("react");
+import React from 'react';
 
 const ThemeToggle = () => {
     const darkTheme = [`linear-gradient(to right, #414141, #000000)`, `#fff`];
@@ -13,7 +12,7 @@ const ThemeToggle = () => {
 
     // On page load, grab theme from local storage and set mood. Remove the event listener
     // when the component unmounts
-    React.useEffect(() => {
+    useEffect(() => {
         localStorage.setItem('metaj-theme', theme);
         const onPageLoad = () => {
             const root = document.querySelector(':root');
