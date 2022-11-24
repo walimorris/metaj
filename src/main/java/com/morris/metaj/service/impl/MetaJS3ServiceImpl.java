@@ -6,10 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.core.waiters.WaiterResponse;
 import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.CreateBucketRequest;
-import software.amazon.awssdk.services.s3.model.HeadBucketRequest;
-import software.amazon.awssdk.services.s3.model.HeadBucketResponse;
+import software.amazon.awssdk.services.s3.model.*;
 import software.amazon.awssdk.services.s3.waiters.S3Waiter;
+
+import java.util.List;
 
 @Service
 public class MetaJS3ServiceImpl implements MetaJS3Service {
@@ -36,6 +36,28 @@ public class MetaJS3ServiceImpl implements MetaJS3Service {
         if (waiterResponse.matched().response().isPresent()) {
             isResponsePresent = true;
         }
+        waiter.close();
         return isResponsePresent;
+    }
+
+    @Override
+    public boolean checkBucketExists(S3Client client, String bucketName) {
+        ListBucketsRequest listBucketsRequest = ListBucketsRequest.builder()
+                .build();
+        ListBucketsResponse listBucketsResponse = client.listBuckets(listBucketsRequest);
+        List<Bucket> buckets = listBucketsResponse.buckets();
+        if (!buckets.isEmpty()) {
+            for (Bucket bucket : buckets) {
+                if (bucket.name().equals(bucketName)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean checkBasicCpuUtilBucketExists(S3Client client) {
+        return checkBucketExists(client, METAJ_BASIC_CPU_UTIL_BUCKET);
     }
 }

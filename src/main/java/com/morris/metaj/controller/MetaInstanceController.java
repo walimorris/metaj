@@ -1,6 +1,7 @@
 package com.morris.metaj.controller;
 
 import com.morris.metaj.model.MetaInstance;
+import com.morris.metaj.service.MetaJS3Service;
 import com.morris.metaj.service.impl.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.cloudwatch.CloudWatchClient;
+import software.amazon.awssdk.services.s3.S3Client;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,6 +30,9 @@ public class MetaInstanceController {
     CloudWatchServiceImpl cloudWatchService;
 
     @Autowired
+    MetaJS3Service metaJS3Service;
+
+    @Autowired
     AwsClientsBuilderImpl clientsBuilder;
 
     @Autowired
@@ -42,14 +47,28 @@ public class MetaInstanceController {
         String instanceId = instanceMappings.getInstanceValue(metaInstance.getId());
 
         String accountId = metaJAwsIamService.getAccountId();
-        Region globalRegion = instanceMappings.getInstanceRegion(metaInstance.getAvailabilityZone());
+        Region metajRegion = instanceMappings.getInstanceRegion(metaInstance.getAvailabilityZone());
 
-        // build cpu utilization alarm for metaj instance if it does not exist
-        CloudWatchClient cloudWatchClient = clientsBuilder.getCloudWatchClient(globalRegion);
-        if (!cloudWatchService.basicCPUMetricAlarmExists(cloudWatchClient, instanceId)) {
-            cloudWatchService.putBasicCPUMetricAlarm(cloudWatchClient, instanceId);
+        boolean isBasicCPUMetricBucketCreated;
+        S3Client s3Client = clientsBuilder.getS3Client(metajRegion);
+        if (!metaJS3Service.checkBasicCpuUtilBucketExists(s3Client)) {
+            isBasicCPUMetricBucketCreated = metaJS3Service.createBasicCPUMetricBucket(s3Client);
+        } else {
+            isBasicCPUMetricBucketCreated = true;
         }
-        cloudWatchClient.close();
+
+        CloudWatchClient cloudWatchClient = null;
+        if (isBasicCPUMetricBucketCreated) {
+            cloudWatchClient = clientsBuilder.getCloudWatchClient(metajRegion);
+            if (!cloudWatchService.basicCPUMetricAlarmExists(cloudWatchClient, instanceId)) {
+                cloudWatchService.putBasicCPUMetricAlarm(cloudWatchClient, instanceId);
+            }
+        }
+        s3Client.close();
+
+        if (cloudWatchClient != null) {
+            cloudWatchClient.close();
+        }
         return metaInstance;
     }
 
