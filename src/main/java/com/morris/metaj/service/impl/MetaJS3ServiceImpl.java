@@ -3,10 +3,8 @@ package com.morris.metaj.service.impl;
 import com.morris.metaj.service.MetaJS3Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.core.waiters.WaiterResponse;
-import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.CreateBucketRequest;
 import software.amazon.awssdk.services.s3.model.HeadBucketRequest;
@@ -19,12 +17,8 @@ public class MetaJS3ServiceImpl implements MetaJS3Service {
 
     public static final String METAJ_BASIC_CPU_UTIL_BUCKET = "metaj-basic-cpu-util-bucket";
 
-    @Autowired
-    AwsClientsBuilderImpl clientsBuilder;
-
     @Override
-    public boolean createBasicCPUMetricBucket() {
-        S3Client client = clientsBuilder.getS3Client(Region.US_WEST_2);
+    public boolean createBasicCPUMetricBucket(S3Client client) {
         S3Waiter waiter = client.waiter();
 
         CreateBucketRequest bucketRequest = CreateBucketRequest.builder()

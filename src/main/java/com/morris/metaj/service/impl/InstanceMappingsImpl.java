@@ -4,9 +4,11 @@ import com.morris.metaj.service.InstanceMappings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import software.amazon.awssdk.regions.Region;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -24,8 +26,23 @@ public class InstanceMappingsImpl implements InstanceMappings {
 
     @Override
     public String getInstanceValue(String property) throws IOException {
-        Map<String, String> instanceMap = mapDeviceMappings(property.split(" "));
-        return instanceMap.get(instanceMap.keySet().toArray()[0]);
+        Map<String, String> instanceMap = mapDeviceMappingsWithSpaceSplit(property);
+        return getFirstKeyValueFromMap(instanceMap);
+    }
+
+    @Override
+    public Region getInstanceRegion(String property) throws IOException {
+        Map<String, String> instanceMap = mapDeviceMappingsWithSpaceSplit(property);
+        String propertyValue = getFirstKeyValueFromMap(instanceMap);
+        propertyValue = propertyValue.substring(0, propertyValue.length() - 1);
+        List<Region> regions = Region.regions();
+
+        for (Region region : regions) {
+            if (region.toString().equalsIgnoreCase(propertyValue)) {
+                return region;
+            }
+        }
+        return null;
     }
 
     /**
@@ -79,5 +96,28 @@ public class InstanceMappingsImpl implements InstanceMappings {
             deviceMappings.put(mappings[i], mappings[i+1]);
         }
         return deviceMappings;
+    }
+
+    /**
+     * Get key/value mapping of given device instance property after splitting the property from a
+     * space regex (a standard empty space in text).
+     *
+     * @param property given metadata instance property
+     *
+     * @return {@link Map}
+     * @throws IOException throws IOException
+     */
+    private Map<String, String> mapDeviceMappingsWithSpaceSplit(String property) throws IOException {
+        return mapDeviceMappings(property.split(" "));
+    }
+
+    /**
+     * Get the first key's value from a {@link Map}
+     *
+     * @param map {@link Map}
+     * @return {@link String}
+     */
+    private String getFirstKeyValueFromMap(Map<String, String> map) {
+        return map.get(map.keySet().toArray()[0]);
     }
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import com.morris.metaj.model.MetaInstance;
+import software.amazon.awssdk.regions.Region;
 
 /**
  * {@code com/morris/metaj/service/InstanceMappings.java} takes various ec2-metadata util commands' output that has a mapping structure,
@@ -38,4 +39,15 @@ public interface InstanceMappings {
      * @see MetaInstance
      */
     String getInstanceValue(String property) throws IOException;
+
+    /**
+     * Get {@link Region} from ec2-metadata availability zone command output.
+     *
+     * @param property output from ec2-metadata utils availability zone
+     *                 command
+     *
+     * @return {@link Region}
+     * @throws IOException throws IOException
+     */
+    Region getInstanceRegion(String property) throws IOException;
 }
