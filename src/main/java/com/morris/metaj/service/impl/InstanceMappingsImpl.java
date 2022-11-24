@@ -22,6 +22,12 @@ public class InstanceMappingsImpl implements InstanceMappings {
         return mapDeviceMappings(splitStr.split(" "));
     }
 
+    @Override
+    public String getInstanceValue(String property) throws IOException {
+        Map<String, String> instanceMap = mapDeviceMappings(property.split(" "));
+        return instanceMap.get(instanceMap.keySet().toArray()[0]);
+    }
+
     /**
      * Removes the first index from the given array.
      *
