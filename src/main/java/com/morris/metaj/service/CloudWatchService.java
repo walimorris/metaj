@@ -13,8 +13,10 @@ public interface CloudWatchService {
      *
      * @param client {@link CloudWatchClient}
      * @param instanceId {@link String} of the instance Cloudwatch should monitor
+     *
+     * @return boolean
      */
-    void putBasicCPUMetricAlarm(CloudWatchClient client, String instanceId);
+    boolean putBasicCPUMetricAlarm(CloudWatchClient client, String instanceId);
 
     /**
      * Checks that the BasicCPUMetric alarm exists for a given instance.

@@ -22,7 +22,7 @@ public class CloudWatchServiceImpl implements CloudWatchService {
     public static final String ALARM_NAME_BASIC_CPU_UTIL = "metaj-basic-cpu-util";
 
     @Override
-    public void putBasicCPUMetricAlarm(CloudWatchClient client, String instanceId) {
+    public boolean putBasicCPUMetricAlarm(CloudWatchClient client, String instanceId) {
         try {
             Dimension dimension = Dimension.builder()
                     .name(instanceId)
@@ -45,9 +45,11 @@ public class CloudWatchServiceImpl implements CloudWatchService {
 
             client.putMetricAlarm(request);
             logger.info("Successfully created alarm on {} with name {}", instanceId, ALARM_NAME_BASIC_CPU_UTIL);
+            return true;
         } catch (CloudWatchException e) {
             logger.error("Error creating cloudwatch alarm for instance {} with alarn name {}", instanceId, ALARM_NAME_BASIC_CPU_UTIL);
         }
+        return false;
     }
 
     @Override

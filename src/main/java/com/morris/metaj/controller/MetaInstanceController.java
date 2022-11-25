@@ -1,8 +1,10 @@
 package com.morris.metaj.controller;
 
 import com.morris.metaj.model.MetaInstance;
-import com.morris.metaj.service.MetaJS3Service;
-import com.morris.metaj.service.impl.*;
+import com.morris.metaj.service.impl.InstanceInitializerImpl;
+import com.morris.metaj.service.impl.InstanceMappingsImpl;
+import com.morris.metaj.service.impl.MetaJAwsIamServiceImpl;
+import com.morris.metaj.service.impl.MetaJSetupServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.services.cloudwatch.CloudWatchClient;
-import software.amazon.awssdk.services.s3.S3Client;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,19 +27,13 @@ public class MetaInstanceController {
     private InstanceInitializerImpl instanceInitializer;
 
     @Autowired
-    CloudWatchServiceImpl cloudWatchService;
-
-    @Autowired
-    MetaJS3Service metaJS3Service;
-
-    @Autowired
-    AwsClientsBuilderImpl clientsBuilder;
-
-    @Autowired
     InstanceMappingsImpl instanceMappings;
 
     @Autowired
     MetaJAwsIamServiceImpl metaJAwsIamService;
+
+    @Autowired
+    MetaJSetupServiceImpl metaJSetupService;
 
     @GetMapping("/instance")
     public MetaInstance getMetaInstance() throws IOException {
@@ -49,26 +43,7 @@ public class MetaInstanceController {
         String accountId = metaJAwsIamService.getAccountId();
         Region metajRegion = instanceMappings.getInstanceRegion(metaInstance.getAvailabilityZone());
 
-        boolean isBasicCPUMetricBucketCreated;
-        S3Client s3Client = clientsBuilder.getS3Client(metajRegion);
-        if (!metaJS3Service.checkBasicCpuUtilBucketExists(s3Client)) {
-            isBasicCPUMetricBucketCreated = metaJS3Service.createBasicCPUMetricBucket(s3Client);
-        } else {
-            isBasicCPUMetricBucketCreated = true;
-        }
-
-        CloudWatchClient cloudWatchClient = null;
-        if (isBasicCPUMetricBucketCreated) {
-            cloudWatchClient = clientsBuilder.getCloudWatchClient(metajRegion);
-            if (!cloudWatchService.basicCPUMetricAlarmExists(cloudWatchClient, instanceId)) {
-                cloudWatchService.putBasicCPUMetricAlarm(cloudWatchClient, instanceId);
-            }
-        }
-        s3Client.close();
-
-        if (cloudWatchClient != null) {
-            cloudWatchClient.close();
-        }
+        metaJSetupService.setupMetaJ(instanceId, metajRegion);
         return metaInstance;
     }
 
