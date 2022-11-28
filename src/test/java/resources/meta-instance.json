@@ -1,0 +1,1 @@
+{"id":"ec2-123456789","publicHostName":"ec2","localHostName":"ubuntu","availabilityZone":"us-west-2","amiId":"12345","launchIndex":"test","amiManifestPath":"none","type":"t2.micro","localIpv4":"123-123-123","kernelId":"12345","publicKeys":"ESL546373","ancestorAmiIds":"none","blockDeviceMapping":"test","productCodes":"test"}

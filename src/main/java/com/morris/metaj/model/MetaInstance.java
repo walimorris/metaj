@@ -1,20 +1,54 @@
 package com.morris.metaj.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class MetaInstance {
-    private final String id;
-    private final String publicHostName;
-    private final String localHostName;
-    private final String availabilityZone;
-    private final String amiId;
-    private final String launchIndex;
-    private final String amiManifestPath;
-    private final String type;
-    private final String localIpv4;
-    private final String kernelId;
-    private final String publicKeys;
-    private final String ancestorAmiIds;
-    private final String blockDeviceMapping;
-    private final String productCodes;
+
+    @JsonProperty("id")
+    private String id;
+
+    @JsonProperty("publicHostName")
+    private String publicHostName;
+
+    @JsonProperty("localHostName")
+    private String localHostName;
+
+    @JsonProperty("availabilityZone")
+    private String availabilityZone;
+
+    @JsonProperty("amiId")
+    private String amiId;
+
+    @JsonProperty("launchIndex")
+    private String launchIndex;
+
+    @JsonProperty("amiManifestPath")
+    private String amiManifestPath;
+
+    @JsonProperty("type")
+    private String type;
+
+    @JsonProperty("localIpv4")
+    private String localIpv4;
+
+    @JsonProperty("kernelId")
+    private String kernelId;
+
+    @JsonProperty("publicKeys")
+    private String publicKeys;
+
+    @JsonProperty("ancestorAmiIds")
+    private String ancestorAmiIds;
+
+    @JsonProperty("blockDeviceMapping")
+    private String blockDeviceMapping;
+
+    @JsonProperty("productCodes")
+    private String productCodes;
+
+    public MetaInstance() {
+        super();
+    }
 
     public MetaInstance(String id, String publicHostName, String localHostName,
                         String availabilityZone, String amiId, String launchIndex,
