@@ -1,6 +1,5 @@
-package com.morris.metaj;
+package com.morris.metaj.controller;
 
-import com.morris.metaj.controller.MetaInstanceController;
 import com.morris.metaj.model.MetaInstance;
 import com.morris.metaj.service.impl.InstanceInitializerImpl;
 import com.morris.metaj.service.impl.InstanceMappingsImpl;

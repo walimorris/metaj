@@ -1,4 +1,4 @@
-package com.morris.metaj;
+package com.morris.metaj.controller;
 
 import com.morris.metaj.controller.MetaJHomeController;
 import org.junit.jupiter.api.Assertions;
