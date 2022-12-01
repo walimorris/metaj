@@ -61,7 +61,7 @@ class MetaJS3ServiceImplTest {
 
 
     @Test
-    public void contextLoads() {
+    void contextLoads() {
         Assertions.assertNotNull(metaJS3Service);
     }
 
