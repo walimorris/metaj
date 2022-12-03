@@ -83,13 +83,10 @@ public class InstanceMappingsImpl implements InstanceMappings {
      * @param mappings String[] device properties and values
      *
      * @return {@link Map} of devices properties mapped to its value
-     *
-     * @throws IOException correct output can not be given with uneven array which should consist of
-     * a EC2 virtual instance's properties and value companion.
      */
-    private Map<String, String> mapDeviceMappings(String[] mappings) throws IOException {
+    private Map<String, String> mapDeviceMappings(String[] mappings) {
         if (mappings.length % 2 != 0) {
-            throw new IOException("Uneven device mapping properties, check that all device properties map to an associated value");
+            return null;
         }
         Map<String, String> deviceMappings = new HashMap<>();
         for (int i = 0; i < mappings.length; i+=2) {
